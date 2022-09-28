@@ -43,7 +43,7 @@ std::vector<double> Text::getData(std::vector<std::string> text, int start)
 */
 bool Text::isNumber(char ch)
 {
-	return 48 <= static_cast<int>(ch) && static_cast<int>(ch) <= 57 ? true : false;
+	return 48 <= static_cast<int>(ch) && static_cast<int>(ch) <= 57;
 }
 
 /*
@@ -51,31 +51,92 @@ bool Text::isNumber(char ch)
 * Parameters: str(string)
 * str -> just string
 */
+// std::vector<double> Text::getDoubleInString(std::string str)
+// {
+// 	std::vector<double> ans;
+// 	std::string temp = "";
+// 	char ch;
+// 	for (int i = 0; i < str.size(); i++)
+// 	{
+// 		ch = str[i];
+// 		// 現在的字元是 '-', 下一個字元是數字, 現在的字元是最後第二個, 數字暫存區是空的
+// 		if (ch == '-' && isNumber(str[i + 1]) && i < str.size() - 1 && temp.empty())
+// 		{
+// 			temp += ch;
+// 		}
+// 		else if (isNumber(ch) || ch == '.')
+// 		{
+// 			temp += ch;
+// 		}
+// 		else if (!temp.empty())
+// 		{
+// 			ans.push_back(std::stof(temp));
+// 			temp.clear();
+// 		}
+// 	}
+// 	if (!temp.empty())
+// 	{
+// 		ans.push_back(std::stof(temp));
+// 		temp.clear();
+// 	}
+// 	return ans;
+// }
+
 std::vector<double> Text::getDoubleInString(std::string str)
 {
 	std::vector<double> ans;
 	std::string temp = "";
-	for (int i = 0; i < str.size(); i++)
+	int i = -1;
+	while (++i < str.size())
 	{
-		char ch = str[i];
-		if (ch == '-' && isNumber(str[i + 1]) && i < str.size() - 1 && temp.empty())
-		{
-			temp += ch;
+		// if the first char is '-', add '-' to temp and identify from str[1], otherwise identify from str[0]
+		if (str[i] == '-') {
+			temp += '-';
+			i++;
 		}
-		else if (isNumber(ch) || ch == '.')
+		// 小數點前的判斷
+		while (true)
 		{
-			temp += ch;
+			// 遇到數字就加到 temp
+			if (isNumber(str[i]))
+				temp += str[i];
+			// 遇到小數點 跳出迴圈 進到下一個迴圈判斷小數點後的位數
+			else if (str[i] == '.') {
+				temp += str[i];
+				break;
+			}
+			// 遇到除了 數字 或 小數點
+			else {
+				if (!temp.empty()) {
+					//std::cerr << std::endl << temp;
+					ans.push_back(std::stof(temp));
+					
+					temp.clear();
+					break;
+				}
+				else 
+					break;
+			}
+			i++;
 		}
-		else if (!temp.empty())
+		if (temp.empty())
+			continue;
+		while (true)
 		{
-			ans.push_back(std::stof(temp));
-			temp.clear();
+			i++;
+			if (isNumber(str[i]))
+				temp += str[i];
+			else {
+				if (temp == ".") {
+					temp.clear();
+					break;
+				}
+				//std::cerr << std::endl << temp;
+				ans.push_back(std::stof(temp));
+				temp.clear();
+				break;
+			}
 		}
-	}
-	if (!temp.empty())
-	{
-		ans.push_back(std::stof(temp));
-		temp.clear();
 	}
 	return ans;
 }

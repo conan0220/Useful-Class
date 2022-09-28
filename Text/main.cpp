@@ -3,10 +3,7 @@
 int main()
 {
 	Text text;
-	auto txt = text.loadFile("text.txt");
-	auto numbers = text.getData(txt);
+	auto numbers = text.getData(text.loadFile("text.txt"));
 	for (auto num : numbers)
-	{
 		std::cout << num << " ";
-	}
 }
