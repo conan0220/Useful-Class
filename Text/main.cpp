@@ -2,8 +2,8 @@
 
 int main()
 {
-	Text text;
-	auto numbers = text.getData(text.loadFile("text.txt"));
+	auto txt = loadFile("text.txt");
+	auto numbers = getData(txt);
 	for (auto num : numbers)
 		std::cout << num << " ";
 }
