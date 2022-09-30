@@ -44,7 +44,7 @@ std::vector<std::string> loadFile(std::string filePath)
  * Parameters: str(string)
  * str -> target
  */
-std::vector<double> getDoubleInString(std::string str)
+std::vector<double> getDoubleFromString(std::string str)
 {
 	std::vector<double> ans;
 	std::string temp = "";
