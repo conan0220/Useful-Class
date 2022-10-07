@@ -7,7 +7,7 @@ int main()
 	{
 		if (inString(str, "arc"))
 		{
-			for (double num : getDoubleInString(str))
+			for (double num : getDoubleFromString(str))
 				std::cout << num << " ";
 			std::cout << std::endl;
 		}

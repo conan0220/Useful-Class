@@ -122,7 +122,7 @@ std::vector<double> getData(std::vector<std::string> text, int start)
 	std::vector<double> temp;
 	for (int i = start; i < text.size(); i++)
 	{
-		temp = getDoubleInString(text[i]);
+		temp = getDoubleFromString(text[i]);
 		ans.insert(ans.end(), temp.begin(), temp.end());
 	}
 	return ans;
